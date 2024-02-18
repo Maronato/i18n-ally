@@ -1,8 +1,7 @@
 import child_process from 'child_process'
 import path from 'path'
+import { inspect } from 'util'
 import { Parser } from './base'
-import i18n from '~/i18n'
-import { Log } from '~/utils'
 import { Config, Global } from '~/core'
 
 const LanguageIds = {
@@ -16,7 +15,7 @@ const LanguageExts = {
 } as const
 
 export class EcmascriptParser extends Parser {
-  readonly readonly = true
+  readonly readonly = false
 
   constructor(public readonly id: 'js'|'ts' = 'js') {
     super([LanguageIds[id]], LanguageExts[id])
@@ -26,8 +25,8 @@ export class EcmascriptParser extends Parser {
     return {}
   }
 
-  async dump() {
-    return ''
+  async dump(object: object, sort: boolean): Promise<string> {
+    return `export default ${inspect(object, { depth: null, sorted: sort })} as const\n`
   }
 
   async load(filepath: string) {
@@ -57,9 +56,5 @@ export class EcmascriptParser extends Parser {
         }
       })
     })
-  }
-
-  async save() {
-    Log.error(i18n.t('prompt.writing_js'))
   }
 }
