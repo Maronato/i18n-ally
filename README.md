@@ -1,3 +1,13 @@
+# TS version!
+```
+yarn global add node-gyp
+yarn install
+yarn build
+yarn vsce package
+```
+Then go into vscode -> extensions -> install from vsix and select the generated vsix file
+
+
 <p align="center">
 <img src="https://github.com/lokalise/i18n-ally/blob/main/screenshots/full-logo-new.png?raw=true" alt="logo" width="450"/>
 </p>
